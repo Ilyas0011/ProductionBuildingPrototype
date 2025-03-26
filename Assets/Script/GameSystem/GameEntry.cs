@@ -23,6 +23,7 @@ public class GameEntry : MonoBehaviour
     {
          new(typeof(UnityCallbackService)),
          new(typeof(ScreenManager)),
+         new(typeof(InputManager))
     };
 
     class ServiceExecutionStage
