@@ -51,6 +51,7 @@ public class GameEntry : MonoBehaviour
             return ServiceInstance;
         }
     }
+
     void RegisterServices()
     {
         foreach (var order in _serviceRegistrationOrder)

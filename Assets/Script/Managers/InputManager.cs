@@ -9,6 +9,7 @@ public class InputManager: IInitializable
     private bool isInputEnabled;
 
     public Action Move;
+    public Action<float, float> MoveCamera;
 
     public bool IsReady { get; set; }
     public bool DontAutoInit { get; }
@@ -31,6 +32,11 @@ public class InputManager: IInitializable
         if (isInputEnabled)
         {
             if (Input.GetMouseButtonDown(0)) Move?.Invoke();
+
+            float horizontal = Input.GetAxis("Horizontal");
+            float vertical = Input.GetAxis("Vertical");
+
+            MoveCamera?.Invoke(horizontal, vertical);
         }
     }
 }

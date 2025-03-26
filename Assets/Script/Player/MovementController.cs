@@ -20,9 +20,7 @@ public class MovementController : MonoBehaviour
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit))
-        {
             agent.SetDestination(hit.point);
-        }
     }
 
     private void Update()
