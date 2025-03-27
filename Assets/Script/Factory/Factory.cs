@@ -3,12 +3,13 @@ using System.Threading;
 using TMPro;
 using UnityEngine;
 
-public abstract class Factory : MonoBehaviour, IFactory
+public abstract class Factory : MonoBehaviour
 {
     [SerializeField] protected float _productionTime = 2f;
 
-    public event Action<ResourceType, int> ResourceCollected;
     public event Action<int> ResourceProduced;
+    public event Action OpenResourceScreen;
+    public event Action CloseResourceScreen;
     public event Action ResourcesReset;
 
     [SerializeField] protected ResourceType _resourceType;
@@ -21,15 +22,36 @@ public abstract class Factory : MonoBehaviour, IFactory
 
     private SavesService _savesService;
 
+    private bool isCollectorTrigger = false;
+
     public void Init()
     {
         _savesService = ServiceLocator.Get<SavesService>();
         _trigger = GetComponentInChildren<CollectorTrigger>();
-        _trigger.TriggerEntered += CollectingResource;
 
         ResetProductionValues();
+    }
+
+    private void OnEnable()
+    {
+        _trigger.TriggerEntered += TriggerEntry;
+        _trigger.TriggerExit += TriggerExit;
 
     }
+
+    private void OnDisable()
+    {
+        _trigger.TriggerEntered -= TriggerEntry;
+        _trigger.TriggerExit -= TriggerExit;
+    }
+
+    private void TriggerEntry() => isCollectorTrigger = true;
+    private void TriggerExit()
+    {
+        isCollectorTrigger = false;
+        CloseResourceScreen?.Invoke();
+    }
+
     private void ResetProductionValues()
     {
         _resourceAmount = 0;
@@ -42,6 +64,9 @@ public abstract class Factory : MonoBehaviour, IFactory
 
         if (_timeSinceLastProduction > _productionTime)
             ProduceResource();
+
+        if (isCollectorTrigger)
+            CollectingResource();
     }
 
     private void ProduceResource()
@@ -53,8 +78,9 @@ public abstract class Factory : MonoBehaviour, IFactory
 
     public void CollectingResource()
     {
-        if (_resourceAmount != 0)
+        if (_resourceAmount > 1)
         {
+            OpenResourceScreen?.Invoke();
             _savesService.AddResource(ResourceType, _resourceAmount);
             _resourceAmount = 0;
             ResourcesReset?.Invoke();

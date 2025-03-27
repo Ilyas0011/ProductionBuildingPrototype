@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Unity.Android.Gradle.Manifest;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.Device;
@@ -28,6 +29,14 @@ public class ScreenManager : MonoBehaviour, IInitializable
     {
         _canvasTransform = Instantiate(_config.CanvasPrefab, transform.position, Quaternion.identity).transform;
         _canvasTransform.SetParent(transform);
+    }
+
+    public Type GetCurrenScreenType()
+    {
+        if(_currentScreenObject != null )
+            return _currentScreenObject.GetType();
+
+        return null;
     }
 
     public void OpenScreen(ScreenIdentifier screenIdentifier)

@@ -15,4 +15,5 @@ MonoBehaviour:
   ScreenPrefabs:
   - {fileID: 1423281852480948884, guid: 9ea900bb96d452242b174fd3ed205b07, type: 3}
   - {fileID: 8854134370058433309, guid: 0aefecccac21e5b438b571ec7f80929f, type: 3}
+  - {fileID: 4210155937087558336, guid: cab7229e30d0a7c44955e68a159e3735, type: 3}
   CanvasPrefab: {fileID: 1740057367401371605, guid: 92d1dc7daddc10f4d98873cb202c57a6, type: 3}

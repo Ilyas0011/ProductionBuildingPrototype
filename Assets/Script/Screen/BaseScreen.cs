@@ -6,6 +6,7 @@ public abstract class BaseScreen : MonoBehaviour
     public enum ScreenIdentifier
     {
         Menu = 1,
-        CoreGame = 2
+        CoreGame = 2,
+        Resources = 3
     }
 }

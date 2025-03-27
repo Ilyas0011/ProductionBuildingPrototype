@@ -42,12 +42,11 @@ public class SavesService : IInitializable
         foreach (var resource in Data.resourceAmount)
         {
             if (resource.resourceType == resourceType)
-            {
                 return resource.amount;
-            }
         }
         return 0;
     }
+
 
     public void AddResource(ResourceType resourceType, int value)
     {

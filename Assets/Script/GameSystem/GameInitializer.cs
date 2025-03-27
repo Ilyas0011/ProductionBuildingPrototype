@@ -16,6 +16,6 @@ public class GameInitializer : MonoBehaviour
             factory.Init();
 
         _uiService = ServiceLocator.Get<UIService>();
-        _uiService.SubscribeToFactoryEvents();
+        _uiService.SubscribeToFactoryEvents(_factories);
     }
 }
