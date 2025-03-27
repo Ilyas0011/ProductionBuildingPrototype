@@ -22,8 +22,10 @@ public class GameEntry : MonoBehaviour
     private List<ServiceExecutionStage> _serviceRegistrationOrder = new()
     {
          new(typeof(UnityCallbackService)),
-         new(typeof(ScreenManager)),
-         new(typeof(InputManager))
+         new(typeof(InputManager)),
+         new(typeof(UIService)),
+         new(typeof(SavesService)),
+         new(typeof(ScreenManager))
     };
 
     class ServiceExecutionStage

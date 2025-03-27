@@ -19,12 +19,16 @@ public abstract class Factory : MonoBehaviour, IFactory
 
     private CollectorTrigger _trigger;
 
-    private void Awake()
+    private SavesService _savesService;
+
+    public void Init()
     {
+        _savesService = ServiceLocator.Get<SavesService>();
         _trigger = GetComponentInChildren<CollectorTrigger>();
         _trigger.TriggerEntered += CollectingResource;
 
         ResetProductionValues();
+
     }
     private void ResetProductionValues()
     {
@@ -51,7 +55,7 @@ public abstract class Factory : MonoBehaviour, IFactory
     {
         if (_resourceAmount != 0)
         {
-            ResourceCollected?.Invoke(_resourceType, _resourceAmount);
+            _savesService.AddResource(ResourceType, _resourceAmount);
             _resourceAmount = 0;
             ResourcesReset?.Invoke();
         }

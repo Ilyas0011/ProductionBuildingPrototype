@@ -7,7 +7,7 @@ public class MovementController : MonoBehaviour
     private AnimationController _animationContoller;
     private Camera _camera;
 
-    private void Awake()
+    public void Awake()
     {
        agent = GetComponent<NavMeshAgent>();
         _animationContoller = GetComponent<AnimationController>();
