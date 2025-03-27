@@ -11,7 +11,8 @@ public abstract class Factory : MonoBehaviour, IFactory
     public event Action<int> ResourceProduced;
     public event Action ResourcesReset;
 
-    protected abstract ResourceType _resourceType { get; }
+    [SerializeField] protected ResourceType _resourceType;
+    public ResourceType ResourceType => _resourceType;
 
     private int _resourceAmount = 0;
     private float _timeSinceLastProduction;
@@ -42,7 +43,6 @@ public abstract class Factory : MonoBehaviour, IFactory
     private void ProduceResource()
     {
         _resourceAmount++;
-        Debug.Log(_resourceAmount);
         ResourceProduced?.Invoke(_resourceAmount);
         _timeSinceLastProduction = 0f;
     }
@@ -54,7 +54,6 @@ public abstract class Factory : MonoBehaviour, IFactory
             ResourceCollected?.Invoke(_resourceType, _resourceAmount);
             _resourceAmount = 0;
             ResourcesReset?.Invoke();
-            Debug.Log(_resourceAmount);
         }
     }
 }

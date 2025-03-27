@@ -1,18 +1,20 @@
-using Microsoft.Unity.VisualStudio.Editor;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FactoryUI : MonoBehaviour
 {
-    [SerializeField] protected TextMeshProUGUI _resourceAmountText;
-    [SerializeField] protected Image _factoryIcon;
+    [SerializeField] private TextMeshProUGUI _resourceText;
+
     private Factory _factory;
+    private string _resourceName;
 
     void Awake()
     {
         ResetResourceText();
 
         _factory = GetComponentInParent<Factory>();
+        _resourceName = _factory.ResourceType.ToString();
     }
 
     private void OnEnable()
@@ -27,7 +29,7 @@ public class FactoryUI : MonoBehaviour
         _factory.ResourcesReset -= ResetResourceText;
     }
 
-    private void UpdateResourceText(int amount) => _resourceAmountText.text = amount.ToString();
+    private void UpdateResourceText(int amount) => _resourceText.text = $"{_resourceName}: {amount.ToString()}";
 
-    private void ResetResourceText() => _resourceAmountText.text = "0";
+    private void ResetResourceText() => _resourceText.text = $"{_resourceName}: 0";
 }
