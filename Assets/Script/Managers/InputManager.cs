@@ -10,7 +10,7 @@ public class InputManager: IInitializable
 
     public Action Move;
     public Action<float, float> MoveCamera;
-
+    
     public bool IsReady { get; set; }
     public bool DontAutoInit { get; }
 
