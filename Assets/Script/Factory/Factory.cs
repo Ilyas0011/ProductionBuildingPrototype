@@ -36,7 +36,6 @@ public abstract class Factory : MonoBehaviour
     {
         _trigger.TriggerEntered += TriggerEntry;
         _trigger.TriggerExit += TriggerExit;
-
     }
 
     private void OnDisable()

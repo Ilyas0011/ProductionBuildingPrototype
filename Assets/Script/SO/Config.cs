@@ -11,7 +11,10 @@ public class Config : ScriptableObject
     public BaseScreen[] ScreenPrefabs;
     public CanvasPrefab CanvasPrefab;
 
+    public AudioClip[] AudioClip;
+
     private Dictionary<ScreenIdentifier, BaseScreen> _screenById;
+    private Dictionary<AudioIdentifier, AudioClip> _audioClipDictionary;
 
     public void Init()
     {
@@ -20,7 +23,33 @@ public class Config : ScriptableObject
         #endif
 
         FillScreenDictionary();
+        FillAudioDictionary();
     }
+
+    private void FillScreenDictionary()
+    {
+        _screenById = new Dictionary<ScreenIdentifier, BaseScreen>();
+
+        foreach (var screenPrefab in ScreenPrefabs)
+            _screenById[screenPrefab.ID] = screenPrefab;
+    }
+
+    private void FillAudioDictionary()
+    {
+        _audioClipDictionary = new Dictionary<AudioIdentifier, AudioClip>();
+
+        foreach (var clip in AudioClip)
+        {
+            string name = clip.name;
+            if (Enum.TryParse(name, out AudioIdentifier audioIdentifier))
+                _audioClipDictionary[audioIdentifier] = clip;
+            else
+                throw new Exception($"The string {name} does not match.");
+        }
+    }
+
+    public BaseScreen GetScreenPrefab(ScreenIdentifier screenIdentifier) => _screenById[screenIdentifier];
+    public AudioClip GetAudioClip(AudioIdentifier audioIdentifier) => _audioClipDictionary[audioIdentifier];
 
     private void ValidationScreenById()
     {
@@ -37,8 +66,8 @@ public class Config : ScriptableObject
                 }
             }
 
-            if(!found)
-            throw new Exception($"The screen {screenType.Name} is not in ScreenPrefabs.");
+            if (!found)
+                throw new Exception($"The screen {screenType.Name} is not in ScreenPrefabs.");
         }
 
         var screenID = new HashSet<ScreenIdentifier>();
@@ -56,22 +85,13 @@ public class Config : ScriptableObject
 
         Type[] allTypes = Assembly.GetExecutingAssembly().GetTypes();
 
-        foreach(var type in allTypes)
+        foreach (var type in allTypes)
         {
-            if(type.IsSubclassOf(typeof(BaseScreen)) && !type.IsAbstract)
-                allScreenTypes.Add(type);  
+            if (type.IsSubclassOf(typeof(BaseScreen)) && !type.IsAbstract)
+                allScreenTypes.Add(type);
         }
 
         return allScreenTypes;
     }
 
-    private void FillScreenDictionary()
-    {
-        _screenById = new Dictionary<ScreenIdentifier, BaseScreen>();
-
-        foreach (var screenPrefab in ScreenPrefabs)
-            _screenById[screenPrefab.ID] = screenPrefab;
-    }
-
-    public BaseScreen GetScreenPrefab(ScreenIdentifier screenIdentifier) => _screenById[screenIdentifier];
 }
