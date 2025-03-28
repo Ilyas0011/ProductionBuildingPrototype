@@ -2,13 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
-using static BaseScreen;
 
 public class UIService: IInitializable
 {
     public Action UpdateResource;
 
-    private ScreenManager _screenManager;
+    private ViewService _screenManager;
     private List<Factory> _factoryList;
 
     private AudioService _audioService;
@@ -32,7 +31,7 @@ public class UIService: IInitializable
     {
         _factoryList = factoryList;
 
-        _screenManager = ServiceLocator.Get<ScreenManager>();
+        _screenManager = ServiceLocator.Get<ViewService>();
 
         foreach (var factory in factoryList)
         {
@@ -52,14 +51,14 @@ public class UIService: IInitializable
 
     private void OpenResourceScreen()
     {
-        if (_screenManager.GetCurrenScreenType() == typeof(ResourceScreen))
+        if (_screenManager.GetCurrenScreenType() == typeof(ResourceWindow))
         {
             UpdateResource?.Invoke();
         }
         else
         {
             _audioService.PlaySounds(AudioIdentifier.OpenScreen);
-            _screenManager.OpenScreen(ScreenIdentifier.Resources);
+            _screenManager.OpenWindow(WindowIdentifier.Resources);
         }
     } 
 

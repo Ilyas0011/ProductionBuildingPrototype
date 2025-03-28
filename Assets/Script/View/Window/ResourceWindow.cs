@@ -1,13 +1,13 @@
 using TMPro;
 using UnityEngine;
 
-public class ResourceScreen : BaseScreen
+public class ResourceWindow : BaseWindow
 {
     [SerializeField] private TextMeshProUGUI[] _resourceText;
     private SavesService _savesService;
     private UIService _uiService;
 
-    public override ScreenIdentifier ID => ScreenIdentifier.Resources;
+    public override WindowIdentifier ID => WindowIdentifier.Resources;
 
     private void Awake()
     {

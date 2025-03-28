@@ -3,26 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
-using static BaseScreen;
 
 [CreateAssetMenu(fileName = "Config", menuName = "ScriptableObjects/Config")]
 public class Config : ScriptableObject
 {
     public BaseScreen[] ScreenPrefabs;
+    public BaseWindow[] WindowPrefabs;
+
     public CanvasPrefab CanvasPrefab;
 
     public AudioClip[] AudioClip;
 
     private Dictionary<ScreenIdentifier, BaseScreen> _screenById;
+    private Dictionary<WindowIdentifier, BaseWindow> _windowById;
     private Dictionary<AudioIdentifier, AudioClip> _audioClipDictionary;
 
     public void Init()
     {
         #if UNITY_EDITOR
-        ValidationScreenById();
+        ValidationScreen();
+        ValidationWindow();
         #endif
 
         FillScreenDictionary();
+        FillWindowDictionary();
         FillAudioDictionary();
     }
 
@@ -32,6 +36,13 @@ public class Config : ScriptableObject
 
         foreach (var screenPrefab in ScreenPrefabs)
             _screenById[screenPrefab.ID] = screenPrefab;
+    }
+    private void FillWindowDictionary()
+    {
+        _windowById = new Dictionary<WindowIdentifier, BaseWindow>();
+
+        foreach (var windowPrefab in WindowPrefabs)
+            _windowById[windowPrefab.ID] = windowPrefab;
     }
 
     private void FillAudioDictionary()
@@ -49,11 +60,12 @@ public class Config : ScriptableObject
     }
 
     public BaseScreen GetScreenPrefab(ScreenIdentifier screenIdentifier) => _screenById[screenIdentifier];
+    public BaseWindow GetWindowPrefab(WindowIdentifier windowIdentifier) => _windowById[windowIdentifier];
     public AudioClip GetAudioClip(AudioIdentifier audioIdentifier) => _audioClipDictionary[audioIdentifier];
 
-    private void ValidationScreenById()
+    private void ValidationScreen()
     {
-        foreach (var screenType in GetAllDerivedTypes())
+        foreach (var screenType in GetDerivedViewTypes(true))
         {
             bool found = false;
             foreach (var prefab in ScreenPrefabs)
@@ -79,19 +91,58 @@ public class Config : ScriptableObject
         }
     }
 
-    public List<Type> GetAllDerivedTypes()
+    private void ValidationWindow()
     {
-        List<Type> allScreenTypes = new();
+        foreach (var windowType in GetDerivedViewTypes(false))
+        {
+            bool found = false;
+            foreach (var prefab in WindowPrefabs)
+            {
+
+                if (prefab.GetType() == windowType)
+                {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found)
+                throw new Exception($"The screen {windowType.Name} is not in ScreenPrefabs.");
+        }
+
+        var windowID = new HashSet<WindowIdentifier>();
+
+        foreach (var windowPrefab in WindowPrefabs)
+        {
+            if (!windowID.Add(windowPrefab.ID))
+                throw new Exception($"Duplicate Screen ID found: {windowPrefab.ID}");
+        }
+    }
+
+    public List<Type> GetDerivedViewTypes(bool screen)
+    {
+        List<Type> allViewTypes = new();
 
         Type[] allTypes = Assembly.GetExecutingAssembly().GetTypes();
 
-        foreach (var type in allTypes)
+        if (screen)
         {
-            if (type.IsSubclassOf(typeof(BaseScreen)) && !type.IsAbstract)
-                allScreenTypes.Add(type);
+            foreach (var type in allTypes)
+            {
+                if (type.IsSubclassOf(typeof(BaseScreen)) && !type.IsAbstract)
+                    allViewTypes.Add(type);
+            }
+        }else
+        {
+
+            foreach (var type in allTypes)
+            {
+                if (type.IsSubclassOf(typeof(BaseWindow)) && !type.IsAbstract)
+                    allViewTypes.Add(type);
+            }
         }
 
-        return allScreenTypes;
+        return allViewTypes;
     }
 
 }

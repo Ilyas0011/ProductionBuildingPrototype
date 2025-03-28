@@ -4,18 +4,18 @@ using Unity.Android.Gradle.Manifest;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.Device;
-using static BaseScreen;
 
-public class ScreenManager : MonoBehaviour, IInitializable
+public class ViewService : MonoBehaviour, IInitializable
 {
     public BaseScreen _currentScreenObject;
+    public BaseWindow _currentWindowsObject;
     private Transform _canvasTransform;
     private Config _config;
 
     public bool IsReady { get; set; }
     public bool DontAutoInit { get; }
 
-    public ScreenManager() => _config = ServiceLocator.Get<Config>();
+    public ViewService() => _config = ServiceLocator.Get<Config>();
 
     public Task Init()
     {
@@ -39,12 +39,26 @@ public class ScreenManager : MonoBehaviour, IInitializable
         return null;
     }
 
+    public void OpenWindow(WindowIdentifier windowIdentifier)
+    {
+        BaseWindow window = _config.GetWindowPrefab(windowIdentifier);
+
+        if (_currentWindowsObject != null)
+            Destroy(_currentWindowsObject.gameObject);
+
+        _currentWindowsObject = Instantiate(window, _canvasTransform.position, Quaternion.identity);
+        _currentWindowsObject.transform.SetParent(_canvasTransform);
+    }
+
     public void OpenScreen(ScreenIdentifier screenIdentifier)
     {
         BaseScreen screen = _config.GetScreenPrefab(screenIdentifier);
 
         if (_currentScreenObject != null)
             Destroy(_currentScreenObject.gameObject);
+
+        if (_currentWindowsObject != null)
+            Destroy(_currentWindowsObject.gameObject);
 
         _currentScreenObject = Instantiate(screen, _canvasTransform.position, Quaternion.identity);
         _currentScreenObject.transform.SetParent(_canvasTransform);

@@ -4,20 +4,18 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static BaseScreen;
-using static ScreenManager;
 
 public class MenuButton : MonoBehaviour
 {
     [SerializeField] private ScreenIdentifier _screenIdentifier;
 
-    private ScreenManager _screenManager;
+    private ViewService _screenManager;
 
     private Button _button;
 
     private void Awake ()
     {
-        _screenManager = ServiceLocator.Get<ScreenManager>();
+        _screenManager = ServiceLocator.Get<ViewService>();
 
         _button = GetComponent<Button>();
         _button.onClick.AddListener(OnButtonClicked);
