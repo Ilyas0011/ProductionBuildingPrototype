@@ -24,8 +24,8 @@ public class GameEntry : MonoBehaviour
          new(typeof(UnityCallbackService)),
          new(typeof(SavesService)),
          new(typeof(InputManager)),
-         new(typeof(AudioService)),
          new(typeof(ViewService)),
+         new(typeof(AudioService)),
          new(typeof(UIService))
     };
 

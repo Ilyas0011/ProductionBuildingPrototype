@@ -62,6 +62,6 @@ public class UIService: IInitializable
         }
     } 
 
-    private void CloseResourceScrenn() => _screenManager.OpenScreen(ScreenIdentifier.CoreGame);
+    private void CloseResourceScrenn() => _screenManager.CloseWindow();
 
 }

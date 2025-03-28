@@ -4,7 +4,7 @@ using System.Collections.Generic;
 [Serializable]
 public class SavesData
 {
-    public int Stons;
+    public bool IsMuteAudio;
 
     public List<ResourceAmount> resourceAmount;
 

@@ -39,6 +39,14 @@ public class ViewService : MonoBehaviour, IInitializable
         return null;
     }
 
+    public void CloseWindow()
+    {
+        if (_currentWindowsObject != null)
+            Destroy(_currentWindowsObject.gameObject);
+
+        _currentWindowsObject = null;
+    }
+
     public void OpenWindow(WindowIdentifier windowIdentifier)
     {
         BaseWindow window = _config.GetWindowPrefab(windowIdentifier);

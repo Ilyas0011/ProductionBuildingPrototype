@@ -37,6 +37,14 @@ public class SavesService : IInitializable
         PlayerPrefs.Save();
     }
 
+    public bool GetIsMuteMusic() => Data.IsMuteAudio;
+
+    public void SetIsMuteMusc(bool isMute)
+    {
+        Data.IsMuteAudio = isMute;
+        Save();
+    }
+
     public int GetResource(ResourceType resourceType)
     {
         foreach (var resource in Data.resourceAmount)
@@ -63,5 +71,6 @@ public class SavesService : IInitializable
         Data.resourceAmount.Add(new ResourceAmount(resourceType, value));
         Save();
     }
+
 
 }
