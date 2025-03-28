@@ -3,29 +3,15 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class UIService: IInitializable
+public class UIService : MonoBehaviour 
 {
     public Action UpdateResource;
 
     private ViewService _screenManager;
     private List<Factory> _factoryList;
 
-    private AudioService _audioService;
-    private AudioClip _openScreenClip;
-    private Config _config;
-
     public bool IsReady { get; set; }
     public bool DontAutoInit { get; }
-
-    public Task Init()
-    {
-        _audioService = ServiceLocator.Get<AudioService>();
-        _config = ServiceLocator.Get<Config>();
-
-        _openScreenClip = _config.GetAudioClip(AudioIdentifier.OpenScreen);
-
-        return Task.CompletedTask;
-    }
 
     public void SubscribeToFactoryEvents(List<Factory> factoryList)
     {
@@ -40,7 +26,7 @@ public class UIService: IInitializable
         }
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         foreach (var factory in _factoryList)
         {
@@ -51,15 +37,10 @@ public class UIService: IInitializable
 
     private void OpenResourceScreen()
     {
-        if (_screenManager.GetCurrenScreenType() == typeof(ResourceWindow))
-        {
+        if (_screenManager.GetCurrenWindowType() == typeof(ResourceWindow))
             UpdateResource?.Invoke();
-        }
         else
-        {
-            _audioService.PlaySounds(AudioIdentifier.OpenScreen);
             _screenManager.OpenWindow(WindowIdentifier.Resources);
-        }
     } 
 
     private void CloseResourceScrenn() => _screenManager.CloseWindow();

@@ -14,6 +14,8 @@ public class InputManager: IInitializable
     public bool IsReady { get; set; }
     public bool DontAutoInit { get; }
 
+    private bool isMobile;
+
     public Task Init()
     {
         _unityCallbackService = ServiceLocator.Get<UnityCallbackService>();
@@ -25,18 +27,49 @@ public class InputManager: IInitializable
         return Task.CompletedTask;
     }
 
-    public void SetInputEnabled(bool isEnabled) => isInputEnabled = isEnabled;
+    public void CheckInputType()
+    {
+        #if UNITY_ANDROID || UNITY_IOS
+                     isMobile = true;
+        #else
+                isMobile = false;
+        #endif
+    }
+
+    public void SetInputEnabled(bool isEnabled)
+    {
+        isInputEnabled = isEnabled;
+    }
 
     public void InputUpdate()
     {
-        if (isInputEnabled)
+        if(isMobile)
         {
-            if (Input.GetMouseButtonDown(0)) Move?.Invoke();
+            if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Began)
+                Move?.Invoke();
 
-            float horizontal = Input.GetAxis("Horizontal");
-            float vertical = Input.GetAxis("Vertical");
+            if (Input.touchCount == 2)
+            {
+                Touch touch0 = Input.GetTouch(0);
+                Touch touch1 = Input.GetTouch(1);
 
-            MoveCamera?.Invoke(horizontal, vertical);
+                float deltaX = (touch0.deltaPosition.x + touch1.deltaPosition.x) * 0.5f;
+                float deltaY = (touch0.deltaPosition.y + touch1.deltaPosition.y) * 0.5f;
+
+               MoveCamera?.Invoke(deltaX, deltaY);
+            }
+        }
+        else
+        {
+            if (isInputEnabled)
+            {
+                if (Input.GetMouseButtonDown(0)) Move?.Invoke();
+
+                float horizontal = Input.GetAxis("Horizontal");
+                float vertical = Input.GetAxis("Vertical");
+
+               MoveCamera?.Invoke(horizontal, vertical);
+            }
         }
     }
 }

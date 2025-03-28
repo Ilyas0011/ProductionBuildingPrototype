@@ -1,6 +1,6 @@
     public enum AudioIdentifier
     {
         Music = 1,
-        OpenScreen = 2,
+        ResourceCollect = 2,
     }
 

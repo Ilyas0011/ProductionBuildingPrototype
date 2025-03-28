@@ -8,15 +8,21 @@ using Object = UnityEngine.Object;
 public class GameEntry : MonoBehaviour
 {
     [SerializeField] private Config _config;
+    private static bool EntryInit = false;
 
     void Awake()
     {
+        if (EntryInit)
+            return;
+
         ServiceLocator.Register(this);
         ServiceLocator.Register(_config);
         _config.Init();
 
         RegisterServices();
         InitServices();
+
+        EntryInit = true;
     }
 
     private List<ServiceExecutionStage> _serviceRegistrationOrder = new()
@@ -27,8 +33,8 @@ public class GameEntry : MonoBehaviour
          new(typeof(ViewService)),
          new(typeof(AudioService)),
          new(typeof(UIService))
-    };
 
+    };
     class ServiceExecutionStage
     {
         public readonly Type ServiceType;
@@ -59,6 +65,7 @@ public class GameEntry : MonoBehaviour
     {
         foreach (var order in _serviceRegistrationOrder)
         {
+         
             try
             {
                 var instance = order.CreateInstance();
@@ -69,6 +76,7 @@ public class GameEntry : MonoBehaviour
                 Debug.LogError($"[Service Registration] Error: {e}");
             }
         }
+
     }
 
     async void InitServices()

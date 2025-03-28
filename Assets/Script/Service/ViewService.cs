@@ -15,10 +15,9 @@ public class ViewService : MonoBehaviour, IInitializable
     public bool IsReady { get; set; }
     public bool DontAutoInit { get; }
 
-    public ViewService() => _config = ServiceLocator.Get<Config>();
-
     public Task Init()
     {
+        _config = ServiceLocator.Get<Config>();
         SpawnCanvas();
 
         OpenScreen(ScreenIdentifier.Menu);
@@ -27,14 +26,14 @@ public class ViewService : MonoBehaviour, IInitializable
 
     private void SpawnCanvas()
     {
-        _canvasTransform = Instantiate(_config.CanvasPrefab, transform.position, Quaternion.identity).transform;
+        _canvasTransform = Instantiate(_config.CanvasPrefab, Vector3.zero, Quaternion.identity).transform;
         _canvasTransform.SetParent(transform);
     }
 
-    public Type GetCurrenScreenType()
+    public Type GetCurrenWindowType()
     {
-        if(_currentScreenObject != null )
-            return _currentScreenObject.GetType();
+        if(_currentWindowsObject != null )
+            return _currentWindowsObject.GetType();
 
         return null;
     }
@@ -54,8 +53,8 @@ public class ViewService : MonoBehaviour, IInitializable
         if (_currentWindowsObject != null)
             Destroy(_currentWindowsObject.gameObject);
 
-        _currentWindowsObject = Instantiate(window, _canvasTransform.position, Quaternion.identity);
-        _currentWindowsObject.transform.SetParent(_canvasTransform);
+        _currentWindowsObject = Instantiate(window, Vector3.zero, Quaternion.identity);
+        _currentWindowsObject.transform.SetParent(_canvasTransform, false);
     }
 
     public void OpenScreen(ScreenIdentifier screenIdentifier)
@@ -68,7 +67,8 @@ public class ViewService : MonoBehaviour, IInitializable
         if (_currentWindowsObject != null)
             Destroy(_currentWindowsObject.gameObject);
 
-        _currentScreenObject = Instantiate(screen, _canvasTransform.position, Quaternion.identity);
-        _currentScreenObject.transform.SetParent(_canvasTransform);
+        _currentScreenObject = Instantiate(screen, Vector3.zero, Quaternion.identity);
+        _currentScreenObject.transform.SetParent(_canvasTransform, false);
+ 
     }
 }

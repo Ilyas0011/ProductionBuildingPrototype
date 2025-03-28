@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ public class CameraMovement : MonoBehaviour
 
     [SerializeField] private float _moveSpeed = 5f;
 
-    private void Awake()
+    public void Awake()
     {
         _inputManager = ServiceLocator.Get<InputManager>();
         _inputManager.MoveCamera += MoveCamera;
@@ -19,4 +20,6 @@ public class CameraMovement : MonoBehaviour
 
         transform.Translate(moveDirection * Time.deltaTime * _moveSpeed, Space.World);
     }
+
+    private void OnDestroy() => _inputManager.MoveCamera -= MoveCamera;
 }

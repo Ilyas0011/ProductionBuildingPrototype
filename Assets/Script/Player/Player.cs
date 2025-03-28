@@ -15,5 +15,5 @@ public class Player : MonoBehaviour
         _inputManager.Move += _movementController.MoveTo;
     }
 
-    private void OnDestoy() => _inputManager.Move -= _movementController.MoveTo;
+    private void OnDestroy() => _inputManager.Move -= _movementController.MoveTo;
 }

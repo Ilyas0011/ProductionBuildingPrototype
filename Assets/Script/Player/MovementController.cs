@@ -5,7 +5,7 @@ public class MovementController : MonoBehaviour
 {
     private NavMeshAgent agent;
     private AnimationController _animationContoller;
-    private Camera _camera;
+    [SerializeField] private Camera _camera;
 
     public void Awake()
     {

@@ -19,13 +19,14 @@ public abstract class Factory : MonoBehaviour
     private float _timeSinceLastProduction;
 
     private CollectorTrigger _trigger;
-
+    private AudioService _audioService;
     private SavesService _savesService;
 
     private bool isCollectorTrigger = false;
 
     public void Init()
     {
+        _audioService = ServiceLocator.Get<AudioService>();
         _savesService = ServiceLocator.Get<SavesService>();
         _trigger = GetComponentInChildren<CollectorTrigger>();
 
@@ -79,6 +80,7 @@ public abstract class Factory : MonoBehaviour
     {
         if (_resourceAmount > 1)
         {
+            _audioService.PlaySounds(AudioIdentifier.ResourceCollect);
             OpenResourceScreen?.Invoke();
             _savesService.AddResource(ResourceType, _resourceAmount);
             _resourceAmount = 0;
