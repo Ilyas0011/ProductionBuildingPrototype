@@ -2,23 +2,19 @@ using System;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class ViewService : MonoBehaviour, IInitializable
+public class ViewService : MonoBehaviour
 {
     public BaseScreen _currentScreenObject;
     public BaseWindow _currentWindowsObject;
     private Transform _canvasTransform;
     private Config _config;
 
-    public bool IsReady { get; set; }
-    public bool DontAutoInit { get; }
-
-    public Task Init()
+    private void Start()
     {
         _config = ServiceLocator.Get<Config>();
         SpawnCanvas();
 
         OpenScreen(ScreenIdentifier.Menu);
-        return Task.CompletedTask;
     }
 
     private void SpawnCanvas()

@@ -1,20 +1,13 @@
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class SavesService : IInitializable
+public class SavesService
 {
     public SavesData Data { get; private set; }
 
     private const string SaveKey = "SavesData";
 
-    public bool IsReady { get; set; }
-    public bool DontAutoInit { get; }
-
-    public Task Init()
-    {
-        Load();
-        return Task.CompletedTask;
-    }
+    public SavesService() => Load();
 
     public void Load()
     {
@@ -70,6 +63,4 @@ public class SavesService : IInitializable
         Data.resourceAmount.Add(new ResourceAmount(resourceType, value));
         Save();
     }
-
-
 }

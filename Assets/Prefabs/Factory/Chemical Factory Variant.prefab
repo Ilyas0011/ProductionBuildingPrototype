@@ -64,7 +64,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.24, y: 0.276401, z: 1.19}
+  m_Size: {x: 1.38, y: 0.276401, z: 1.22}
   m_Center: {x: -0.0108671, y: -0.14612631, z: 0.016436074}
 --- !u!1 &2459387511240109786
 GameObject:
@@ -380,7 +380,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SerializedVersion: 0
-  m_Size: {x: 17.058414, y: 6.4112935, z: 18.763376}
-  m_Center: {x: -4.813528, y: 2.7056472, z: 4.8691463}
+  m_Size: {x: 17.539326, y: 6.4112935, z: 18.763376}
+  m_Center: {x: -5.0539837, y: 2.7056472, z: 4.8691463}
   m_Area: 1
   m_AffectedAgents: ffffffff

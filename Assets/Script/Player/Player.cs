@@ -4,13 +4,13 @@ public class Player : MonoBehaviour
 {
     private MovementController _movementController;
     private AnimationController _animationController;
-    private InputManager _inputManager;
+    private InputService _inputManager;
 
     public void Init()
     {
         _movementController = GetComponent<MovementController>();
         _animationController = GetComponent<AnimationController>();
-        _inputManager = ServiceLocator.Get<InputManager>();
+        _inputManager = ServiceLocator.Get<InputService>();
 
         _inputManager.Move += _movementController.MoveTo;
     }

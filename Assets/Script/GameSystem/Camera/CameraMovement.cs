@@ -2,17 +2,17 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    private InputManager _inputManager;
+    private InputService _inputManager;
 
     [SerializeField] private float _moveSpeed = 5f;
 
     public void Awake()
     {
-        _inputManager = ServiceLocator.Get<InputManager>();
+        _inputManager = ServiceLocator.Get<InputService>();
         _inputManager.MoveCamera += MoveCamera;
 
         if (_inputManager.IsMobileType())
-            _moveSpeed = 15f;
+            _moveSpeed = 20f;
         else
             _moveSpeed = 40f;
     }

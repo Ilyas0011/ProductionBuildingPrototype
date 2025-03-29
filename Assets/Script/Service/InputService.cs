@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class InputManager: IInitializable
+public class InputService
 {
     private UnityCallbackService _unityCallbackService;
 
@@ -14,19 +14,16 @@ public class InputManager: IInitializable
     public bool IsReady { get; set; }
     public bool DontAutoInit { get; }
 
-    public Task Init()
+    public InputService()
     {
         _unityCallbackService = ServiceLocator.Get<UnityCallbackService>();
 
         if(IsMobileType() == true)
             _unityCallbackService.FrameUpdated += MobileInputUpdate;
         else
-            _unityCallbackService.FrameUpdated += DesctoptUpdate;
-
+            _unityCallbackService.FrameUpdated += DesktopUpdate;
 
         SetInputEnabled(true);
-
-        return Task.CompletedTask;
     }
 
     public bool IsMobileType() =>  Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer;
@@ -45,18 +42,16 @@ public class InputManager: IInitializable
 
             MoveCamera?.Invoke(deltaX, deltaY);
         }
-
-        if (touch.phase == TouchPhase.Ended)
+        else if (touch.phase == TouchPhase.Ended && touch.deltaPosition.magnitude == 0)
         {
             Move?.Invoke();
         }
     }
 
-    private void DesctoptUpdate()
+    private void DesktopUpdate()
     {
         if (!isInputEnabled)
             return;
-
 
         if (Input.GetMouseButtonDown(0)) Move?.Invoke();
 

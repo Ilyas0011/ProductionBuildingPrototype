@@ -10,7 +10,7 @@ public class GameEntry : MonoBehaviour
     [SerializeField] private Config _config;
     private static bool EntryInit = false;
 
-    void Awake()
+    private void Awake()
     {
         if (EntryInit)
             return;
@@ -31,7 +31,7 @@ public class GameEntry : MonoBehaviour
     {
          new(typeof(UnityCallbackService)),
          new(typeof(SavesService)),
-         new(typeof(InputManager)),
+         new(typeof(InputService)),
          new(typeof(ViewService)),
          new(typeof(AudioService)),
          new(typeof(UIService))
@@ -63,7 +63,7 @@ public class GameEntry : MonoBehaviour
         }
     }
 
-    void RegisterServices()
+    private void RegisterServices()
     {
         foreach (var order in _serviceRegistrationOrder)
         {
@@ -81,16 +81,13 @@ public class GameEntry : MonoBehaviour
 
     }
 
-    async void InitServices()
+    private void InitServices()
     {
         foreach (var order in _serviceRegistrationOrder)
         {
             try
             {
                 if (order.ServiceInstance is not IInitializable initableService) continue;
-
-                await initableService.Init();
-                initableService.FinishInit();
             }
             catch (Exception e)
             {

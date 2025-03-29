@@ -24,6 +24,10 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 0.6
       objectReference: {fileID: 0}
+    - target: {fileID: 5469932612697274884, guid: 756116965151f944b817b9365297ab91, type: 3}
+      propertyPath: _productionTime
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5475895836293232856, guid: 756116965151f944b817b9365297ab91, type: 3}
       propertyPath: m_Area
       value: 1

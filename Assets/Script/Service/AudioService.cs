@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class AudioService : MonoBehaviour, IInitializable
+public class AudioService : MonoBehaviour
 {
     private List<AudioSource> _audioSources = new List<AudioSource>();
     private Dictionary<AudioClip, AudioSource> _activeSounds = new Dictionary<AudioClip, AudioSource>();
@@ -12,12 +12,10 @@ public class AudioService : MonoBehaviour, IInitializable
     private Config _config;
     private SavesService _savesService;
 
-    public bool IsReady { get; set; }
-    public bool DontAutoInit { get; }
 
     private bool isMuteMusic = false;
 
-    public Task Init()
+    private void Awake()
     {
         _config = ServiceLocator.Get<Config>();
         _savesService = ServiceLocator.Get<SavesService>();
@@ -31,8 +29,6 @@ public class AudioService : MonoBehaviour, IInitializable
         _musicSource.loop = true;
 
         PlayMusic(AudioIdentifier.Music);
-
-        return Task.CompletedTask;
     }
 
 
