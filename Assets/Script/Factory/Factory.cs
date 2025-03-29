@@ -1,6 +1,4 @@
 using System;
-using System.Threading;
-using TMPro;
 using UnityEngine;
 
 public abstract class Factory : MonoBehaviour

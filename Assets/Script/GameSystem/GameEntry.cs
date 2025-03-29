@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Diagnostics;
 using Object = UnityEngine.Object;
 
 public class GameEntry : MonoBehaviour
