@@ -146,6 +146,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6447274286326414431}
   - component: {fileID: 5469932612697274884}
+  - component: {fileID: 5475895836293232856}
   m_Layer: 0
   m_Name: Factory
   m_TagString: Untagged
@@ -185,6 +186,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _productionTime: 1
   _resourceType: 1
+--- !u!114 &5475895836293232856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2513443009940331416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e95dc5ff2b64380880dd7ac5922847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_Size: {x: 18.000668, y: 10.248678, z: 18.841085}
+  m_Center: {x: -5.553568, y: 4.624339, z: 5.1981096}
+  m_Area: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &3774113602590176461
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,8 +328,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 409654908399972719}
-  - component: {fileID: 4790864237343519207}
   - component: {fileID: 8592255617819898612}
+  - component: {fileID: 8470381161981062782}
   m_Layer: 0
   m_Name: 'CollectionZone '
   m_TagString: Untagged
@@ -334,8 +352,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6447274286326414431}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &4790864237343519207
-SphereCollider:
+--- !u!114 &8592255617819898612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8825070293449946232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9300b2cc234856a4a8017a89d7777281, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &8470381161981062782
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -353,20 +383,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8592255617819898612
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8825070293449946232}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9300b2cc234856a4a8017a89d7777281, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Size: {x: 0.9293496, y: 0.17125748, z: 0.84561175}
+  m_Center: {x: -0.05150536, y: 0.049576472, z: -0.1199145}
 --- !u!1001 &5284181488352742229
 PrefabInstance:
   m_ObjectHideFlags: 0

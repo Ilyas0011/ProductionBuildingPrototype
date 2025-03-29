@@ -80,9 +80,9 @@ public abstract class Factory : MonoBehaviour
     {
         if (_resourceAmount > 1)
         {
-            _audioService.PlaySounds(AudioIdentifier.ResourceCollect);
-            OpenResourceScreen?.Invoke();
             _savesService.AddResource(ResourceType, _resourceAmount);
+            OpenResourceScreen?.Invoke();
+            _audioService.PlaySounds(AudioIdentifier.ResourceCollect);
             _resourceAmount = 0;
             ResourcesReset?.Invoke();
         }

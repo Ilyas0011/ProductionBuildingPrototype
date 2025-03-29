@@ -15,6 +15,8 @@ public class GameEntry : MonoBehaviour
         if (EntryInit)
             return;
 
+        Application.targetFrameRate = 60;
+
         ServiceLocator.Register(this);
         ServiceLocator.Register(_config);
         _config.Init();

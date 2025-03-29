@@ -1,9 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using Unity.Android.Gradle.Manifest;
-using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
-using UnityEngine.Device;
 
 public class ViewService : MonoBehaviour, IInitializable
 {

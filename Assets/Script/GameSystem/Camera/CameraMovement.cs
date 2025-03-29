@@ -1,5 +1,3 @@
-using System.Threading.Tasks;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
@@ -12,6 +10,11 @@ public class CameraMovement : MonoBehaviour
     {
         _inputManager = ServiceLocator.Get<InputManager>();
         _inputManager.MoveCamera += MoveCamera;
+
+        if (_inputManager.IsMobileType())
+            _moveSpeed = 15f;
+        else
+            _moveSpeed = 40f;
     }
 
     private void MoveCamera(float horizontal, float vertical)
